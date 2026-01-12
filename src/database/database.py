@@ -34,7 +34,8 @@ def criar_banco():
     CREATE TABLE IF NOT EXISTS atividades(
      id INTEGER PRIMARY KEY AUTOINCREMENT,
      qtd_total INTEGER NOT NULL,
-     qtd_acertos INTEGER, 
+     qtd_acertos INTEGER NOT NULL, 
+     percentual REAL,
      conteudo_id INTEGER,
      FOREIGN KEY (conteudo_id) REFERENCES conteudos(id) ON DELETE CASCADE                  
     )
