@@ -8,8 +8,11 @@ class ContentService:
         cursor = conexao.cursor()
 
         cursor.execute("""
-            SELECT id, nome, materia_id FROM conteudos WHERE materia_id =? 
-          """, materia_id)
+            SELECT id, nome, materia_id 
+            FROM conteudos 
+            WHERE materia_id =?
+
+          """, (materia_id))
         
         linhas = cursor.fetchall()
 
@@ -23,7 +26,45 @@ class ContentService:
         conexao.close()
         return conteudos
     
-    def atualizar_conteudo():
-        pass
-    def excluir_conteudo():
-        pass
+    def criar_conteudo(conteudo):
+        conexao = sqlite3.connect('delphis.db')
+        conexao.execute("PRAGMA foreign_keys = ON")
+        cursor = conexao.cursor()
+
+        cursor.execute("""
+            INSERT INTO conteudos ( nome, materia_id) VALUES (?, ?)
+            """, (conteudo.nome, conteudo.materia_id))
+        
+        conteudo.id = cursor.lastrowid # id que o banco de dados gerou 
+        conexao.commit()
+        conexao.close()
+        return conteudo
+
+    def deletar(conteudo_id):
+         conexao = sqlite3.connect('delphis.db')
+         conexao.execute("PRAGMA foreign_keys = ON")
+         cursor = conexao.cursor()
+
+         cursor.execute("""
+            DELETE FROM conteudos 
+            WHERE id = ? 
+         """, (conteudo_id))
+
+         conexao.commit()
+         conexao.close()
+
+    def atualizar(conteudo_id, novo_nome):
+         conexao = sqlite3.connect('delphis.db')
+         conexao.execute("PRAGMA foreign_keys = ON")
+         cursor = conexao.cursor()
+         
+         cursor.execute("""
+            UPDATE conteudos
+            SET nome = ?
+            WHERE id = ?
+            """, (novo_nome, conteudo_id)
+        )
+         
+         conexao.commit()
+         conexao.close()
+        
