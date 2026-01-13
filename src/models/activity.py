@@ -1,5 +1,5 @@
 class Atividade:
-    def __init__(self, nome, qtd_total, qtd_acertos, data, conteudo_id, id = None, percentual=None):
+    def __init__(self, qtd_total, qtd_acertos, data, conteudo_id, id = None, percentual=None, nome = None):
         self.id = id
         self.nome = nome 
         self.qtd_total = qtd_total

@@ -33,6 +33,7 @@ def criar_banco():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS atividades(
      id INTEGER PRIMARY KEY AUTOINCREMENT,
+     nome TEXT,
      qtd_total INTEGER NOT NULL,
      qtd_acertos INTEGER NOT NULL, 
      percentual REAL,
