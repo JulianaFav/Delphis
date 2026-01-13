@@ -36,6 +36,7 @@ def criar_banco():
      qtd_total INTEGER NOT NULL,
      qtd_acertos INTEGER NOT NULL, 
      percentual REAL,
+     data TEXT NOT NULL,
      conteudo_id INTEGER,
      FOREIGN KEY (conteudo_id) REFERENCES conteudos(id) ON DELETE CASCADE                  
     )

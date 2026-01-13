@@ -1,5 +1,5 @@
 #conversa com o banco, aplica regras e usa as classes
-
+#colocar o metodo de atulizar 
 import sqlite3
 from models.subject import Materia
 
