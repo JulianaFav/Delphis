@@ -1,8 +1,6 @@
 import sqlite3
 from models.activity import Atividade
 
-
-
 class ActivityService:
     def criar_atividade(atividade):
          conexao = sqlite3.connect('delphis.db')
