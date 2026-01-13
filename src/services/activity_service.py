@@ -15,10 +15,10 @@ class ActivityService:
              atividade.percentual = 0
          cursor.execute("""
             INSERT INTO atividades (nome, qtd_total, qtd_acertos, data, percentual, conteudo_id) VALUES(?,?,?,?,?,?)
-          """, (atividade.nome,
-                atividade.qtd_total, atividade.qtd_acertos, atividade.data
+          """,(atividade.nome,
+                atividade.qtd_total, atividade.qtd_acertos, atividade.data,
                 atividade.percentual, 
-                atividade.conteudo_id ))
+                atividade.conteudo_id ) )
 
          atividade.id = cursor.lastrowid
          conexao.commit()
@@ -41,13 +41,63 @@ class ActivityService:
           WHERE id = ?
           """, (atividade.nome, atividade.qtd_total, atividade.qtd_acertos, atividade.data, atividade.percentual, atividade.conteudo_id, atividade.id ))
          
+         if cursor.rowcount == 0:
+            print("Nenhuma atividade foi atualizada")
          conexao.commit()
          conexao.close()
          
 
-    def excluir_atividade():
-        pass
+    def excluir_atividade(id):
+         conexao = sqlite3.connect('delphis.db')
+         conexao.execute("PRAGMA foreign_keys = ON")
+         cursor = conexao.cursor()
+
+         cursor.execute(""" 
+          DELETE FROM atividades
+          WHERE id = ?""", (id,))
+         
+         if cursor.rowcount == 0:
+            print("Nenhuma atividade foi excluída")
+        
+         conexao.commit()
+         conexao.close()
+        
+
     def listar_todas_atividades():
-        pass
-    def listar_atividade_conteudo():
+        conexao = sqlite3.connect('delphis.db')
+        conexao.execute("PRAGMA foreign_keys = ON")
+        cursor = conexao.cursor()
+
+        cursor.execute("""
+            SELECT *
+            FROM atividades
+        """)
+        linhas = cursor.fetchall()
+        atividades = []
+        for linha in linhas:
+            atividade = Atividade(id = linha[0], nome = linha[1], materia_id = linha[2])
+            atividades.append(atividade)
+
+        conexao.close()
+        return atividades
+
+    def listar_atividade_conteudo(conteudo_id):
+        conexao = sqlite3.connect('delphis.db')
+        conexao.execute("PRAGMA foreign_keys = ON")
+        cursor = conexao.cursor()
+
+        cursor.execute("""
+            SELECT *
+            FROM atividades
+            WHERE conteudo_id = ?
+        """, (conteudo_id,))
+        linhas = cursor.fetchall()
+        atividades = []
+        for linha in linhas:
+            atividade = Atividade(id = linha[0], nome = linha[1], c_id = linha[2])
+            atividades.append(atividade)
+
+        conexao.close()
+        return atividades
+    def listar_atividade_data():
         pass
